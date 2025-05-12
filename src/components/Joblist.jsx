@@ -10,5 +10,5 @@ export default function JobList({ jobs }) {
         <p className="text-white text-center col-span-full">No jobs match the selected filters.</p>
       )}
     </div>
-  );
+  )
 }
