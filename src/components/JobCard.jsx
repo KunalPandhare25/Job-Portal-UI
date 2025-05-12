@@ -32,5 +32,5 @@ export default function JobCard({ job }) {
         </button>
       </Link>
     </div>
-  );
+  )
 }
