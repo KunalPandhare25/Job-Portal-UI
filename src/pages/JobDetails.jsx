@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { jobCards } from "../components/jobData"; // Sample job data
+import { jobCards } from "../components/JobData"; // Sample job data
 import Detail from "../components/Detail"; // Detail component to show job info
 
 function JobDetails() {
