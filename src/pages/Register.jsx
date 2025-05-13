@@ -61,40 +61,37 @@ const Register = ({ setUsername }) => {
       return;
     }
 
-    // Save user data to localStorage
     localStorage.setItem('user', JSON.stringify({ fullName: trimmedFullName }));
 
     setError('');
     setSuccess('Account created successfully!');
     setUsername(trimmedFullName);
 
-    // Delay redirect to show success message
     setTimeout(() => {
-      console.log('Redirecting to home...');
       navigate('/');
-    }, 500);
+    }, 1000);
   };
 
   return (
     <div
-      className="flex h-screen items-center justify-center text-white"
+      className="min-h-screen flex items-center justify-center px-4 sm:px-6 text-white"
       style={{
         background: 'linear-gradient(to right, rgb(15, 23, 42), rgb(88, 28, 135), rgb(15, 23, 42))',
       }}
     >
-      <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 bg-opacity-90 rounded-lg shadow-xl">
-        <h2 className="text-3xl font-bold text-center">Register</h2>
+      <div className="w-full max-w-md md:max-w-lg bg-gray-800 bg-opacity-90 p-8 rounded-lg shadow-xl space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center">Register</h2>
 
         {error && <p className="text-red-400 text-sm text-center">{error}</p>}
         {success && <p className="text-green-400 text-sm text-center">{success}</p>}
 
-        <form className="space-y-4" onSubmit={handleRegister}>
+        <form className="space-y-5" onSubmit={handleRegister}>
           <div>
             <label className="block text-sm mb-1 text-gray-300">Full Name</label>
             <input
               type="text"
               autoComplete="name"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
             />
@@ -105,7 +102,7 @@ const Register = ({ setUsername }) => {
             <input
               type="email"
               autoComplete="email"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -116,7 +113,7 @@ const Register = ({ setUsername }) => {
             <input
               type="tel"
               autoComplete="tel"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
               value={mobile}
               onChange={(e) => setMobile(e.target.value)}
             />
@@ -127,7 +124,7 @@ const Register = ({ setUsername }) => {
             <input
               type="password"
               autoComplete="new-password"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -138,7 +135,7 @@ const Register = ({ setUsername }) => {
             <input
               type="password"
               autoComplete="new-password"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
             />
@@ -147,7 +144,7 @@ const Register = ({ setUsername }) => {
           <button
             type="submit"
             disabled={!!success}
-            className="w-full py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2 font-semibold text-white bg-purple-600 rounded hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Register
           </button>

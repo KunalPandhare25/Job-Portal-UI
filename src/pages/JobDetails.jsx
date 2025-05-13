@@ -4,20 +4,21 @@ import { jobCards } from "../components/JobData"; // Sample job data
 import Detail from "../components/Detail"; // Detail component to show job info
 
 function JobDetails() {
-  // Get the job ID from the URL
-  const params = useParams();
-  const jobId = parseInt(params.id);
+  const { id } = useParams();
+  const jobId = parseInt(id);
 
-  // Find the job with the matching ID
   const job = jobCards.find((item) => item.id === jobId);
 
   return (
-    <div className="mt-8">
-      {/* Show job detail if found, otherwise show error */}
+    <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 py-8">
       {job ? (
-        <Detail job={job} />
+        <div className="max-w-5xl mx-auto">
+          <Detail job={job} />
+        </div>
       ) : (
-        <p className="text-center text-red-500">Job not found.</p>
+        <p className="text-center text-red-500 text-lg sm:text-xl font-semibold">
+          Job not found.
+        </p>
       )}
     </div>
   );

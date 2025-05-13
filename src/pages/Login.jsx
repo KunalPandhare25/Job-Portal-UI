@@ -8,7 +8,7 @@ const Login = ({ setUsername }) => {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
 
-  // Load remembered email if available
+  // Check for saved email in local storage
   useEffect(() => {
     const rememberedEmail = localStorage.getItem('rememberedEmail');
     if (rememberedEmail) {
@@ -17,63 +17,48 @@ const Login = ({ setUsername }) => {
     }
   }, []);
 
-  const validatePassword = (password) => {
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/;
-    return regex.test(password);
-  };
-
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (!validatePassword(password)) {
-      setError(
-        'Password must be 8+ characters, include uppercase, lowercase, number, and special character.'
-      );
-      return;
-    }
+    setError(''); // Clear any previous error
 
-    // Simulating user data for demonstration purposes
-    const validEmail = 'admin@example.com';
-    const validPassword = 'Admin@123';
-    const validUsername = 'Admin User';
-
-    if (email === validEmail && password === validPassword) {
-      setError('');
+    if (email && password) {
       if (rememberMe) {
         localStorage.setItem('rememberedEmail', email);
       } else {
         localStorage.removeItem('rememberedEmail');
       }
 
-      // Update username in the Navbar
-      setUsername(validUsername); // Set username after successful login
+      // Simulate username setting after successful login
+      setUsername(email); // You can change this to something else if needed
 
-      navigate('/home');
+      // Redirect to home after login
+      navigate('/');
     } else {
-      setError('Invalid email or password.');
+      setError('Please enter both email and password.');
     }
   };
 
   return (
     <div
-      className="flex h-screen items-center justify-center text-white"
+      className="min-h-screen flex items-center justify-center px-4 py-12 text-white"
       style={{
-        background: 'linear-gradient(to right, rgb(15, 23, 42), rgb(88, 28, 135), rgb(15, 23, 42))',
+        background:
+          'linear-gradient(to right, rgb(15, 23, 42), rgb(88, 28, 135), rgb(15, 23, 42))',
       }}
     >
-      <div className="w-full max-w-md p-8 space-y-6 bg-black/50 rounded-lg shadow-xl backdrop-blur">
-        <h2 className="text-3xl font-bold text-center">Login</h2>
+      <div className="w-full max-w-lg sm:max-w-md bg-black/50 backdrop-blur-md p-8 rounded-lg shadow-xl space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center">Login</h2>
 
         {error && (
-          <div role="alert" className="text-red-400 text-sm text-center">
+          <div className="text-center text-red-400 text-sm sm:text-base" role="alert">
             {error}
           </div>
         )}
 
-        <form className="space-y-4" onSubmit={handleLogin}>
+        <form className="space-y-5" onSubmit={handleLogin}>
           <div>
-            <label htmlFor="email" className="block mb-1 text-sm text-gray-300">
+            <label htmlFor="email" className="block mb-1 text-sm sm:text-base text-gray-300">
               Email
             </label>
             <input
@@ -87,7 +72,7 @@ const Login = ({ setUsername }) => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block mb-1 text-sm text-gray-300">
+            <label htmlFor="password" className="block mb-1 text-sm sm:text-base text-gray-300">
               Password
             </label>
             <input
@@ -101,26 +86,26 @@ const Login = ({ setUsername }) => {
           </div>
 
           <div className="flex items-center justify-between">
-            <label className="flex items-center">
+            <label className="flex items-center text-sm sm:text-base text-gray-300">
               <input
                 type="checkbox"
-                className="mr-2 text-purple-500"
+                className="mr-2 accent-purple-500"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
               />
-              <span className="text-sm text-gray-300">Remember Me</span>
+              Remember Me
             </label>
           </div>
 
           <button
             type="submit"
-            className="w-full py-2 font-semibold text-white bg-blue-600 rounded hover:bg-purple-700 transition"
+            className="w-full py-2 font-semibold text-white bg-purple-600 hover:bg-purple-700 transition rounded"
           >
             Log In
           </button>
         </form>
 
-        <p className="text-sm text-center text-gray-300">
+        <p className="text-sm sm:text-base text-center text-gray-300">
           Don’t have an account?{' '}
           <Link to="/register" className="text-blue-400 hover:underline">
             Register
