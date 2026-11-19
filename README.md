@@ -82,39 +82,49 @@ job-portal-ui/
 
 ## Installation and Setup
 
-### 1. Clone the repository
+### Prerequisites
+
+Make sure you have the following installed:
+- Node.js and npm
+- MySQL Server
+- MySQL Workbench
+- Git
+
+### 1. Clone the Repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd job-portal-ui
+git clone https://github.com/KunalPandhare25/Job-Portal-UI.git
+cd Job-Portal-UI
 ```
 
-Replace `YOUR_GITHUB_REPOSITORY_URL` with the URL of this repository.
+### 2. Install Frontend Dependencies
 
-### 2. Install frontend dependencies
+From the project root directory, run:
 
 ```bash
 npm install
 ```
 
-### 3. Set up the MySQL database
+### 3. Set Up the MySQL Database
 
 1. Open MySQL Workbench.
-2. Create a database named `jobify`.
-3. Import the SQL file located at `database/jobify.sql`.
-4. Execute the SQL script to create the database structure.
+2. Create a new database named `jobify`.
+3. Open the SQL file located at `database/jobify.sql`.
+4. Execute the SQL script to create the required tables and relationships.
 
-### 4. Configure backend environment variables
+**Important:** The SQL file contains `DROP TABLE IF EXISTS` statements. Import it into a fresh database. Do not execute it against an existing database containing data, as existing tables may be dropped.
 
-Navigate to the backend folder:
+### 4. Configure Backend Environment Variables
+
+Navigate to the backend directory:
 
 ```bash
 cd backend
 ```
 
-Create a `.env` file using `.env.example` as a reference.
+Create a `.env` file inside the `backend` directory using `.env.example` as a reference.
 
-Configure the following variables:
+Configure your local environment variables:
 
 ```env
 DB_HOST=localhost
@@ -127,31 +137,47 @@ JWT_SECRET=your_long_random_secret
 PORT=5000
 ```
 
-Use your own MySQL credentials and a secure JWT secret. Never upload your actual `.env` file to GitHub.
+Replace the example values with your own MySQL credentials and a secure JWT secret.
 
-### 5. Install backend dependencies
+Never upload your actual `.env` file or database credentials to GitHub.
 
-From the backend directory:
+### 5. Install Backend Dependencies
+
+Make sure you are inside the `backend` directory:
 
 ```bash
 npm install
 ```
 
-### 6. Start the backend server
+### 6. Start the Backend Server
+
+Run:
 
 ```bash
 node server.js
 ```
 
-The backend runs at:
+Alternatively, you can use:
+
+```bash
+npm start
+```
+
+The backend server runs at:
 
 ```text
 http://localhost:5000
 ```
 
-### 7. Start the frontend
+### 7. Start the Frontend
 
-Open a second terminal, navigate to the project root, and run:
+Open a second terminal and navigate to the project root directory:
+
+```bash
+cd ..
+```
+
+Start the frontend:
 
 ```bash
 npm run dev
@@ -161,13 +187,13 @@ Open the local URL displayed by Vite in your browser.
 
 ## Production Build
 
-To create a production build of the frontend:
+To create a production build of the frontend, run this command from the project root:
 
 ```bash
 npm run build
 ```
 
-To start the backend without nodemon:
+To start the backend using the configured start script:
 
 ```bash
 cd backend
@@ -178,24 +204,27 @@ npm start
 
 Postman resources are included in the `postman/` directory.
 
-Use Postman to test the backend API endpoints. Configure your local API URL and authentication credentials before sending requests.
+Use Postman to test backend API endpoints. Configure your local API URL and authentication credentials before sending requests.
 
 ## Database
 
-The database structure is provided in:
+The database schema is provided in:
 
 ```text
 database/jobify.sql
 ```
 
-Import this file into MySQL Workbench before running the application.
+It includes the tables and relationships required by the application.
+
+Import the SQL file into a fresh MySQL database before running the application.
 
 ## Security
 
 - Environment files containing credentials are excluded from Git.
 - Passwords are hashed using bcrypt.
-- Authentication uses JSON Web Tokens.
+- Authentication uses JSON Web Tokens (JWT).
 - Uploaded files are stored locally during development.
+- Never commit database passwords, JWT secrets, or other sensitive credentials.
 
 ## Author
 
