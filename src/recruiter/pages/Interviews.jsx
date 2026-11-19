@@ -176,7 +176,7 @@ const Interviews = () => {
         status: 'Scheduled',
       };
 
-      setInterviews((prev) => [...prev, newInterview]);
+      setInterviews((prev) => [newInterview, ...prev]);
 
       setShowForm(false);
 

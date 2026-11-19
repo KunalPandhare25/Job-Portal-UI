@@ -15,7 +15,7 @@ const RecruiterSidebar = () => {
     ];
 
     return (
-        <aside className="w-full md:w-64 min-h-0 md:min-h-screen bg-gray-950 text-white border-b md:border-b-0 md:border-r border-gray-800 p-3 sm:p-5">
+        <aside className="w-full md:w-64 md:fixed md:top-0 md:left-0 md:h-screen md:overflow-y-auto min-h-0 md:min-h-screen bg-gray-950 text-white border-b md:border-b-0 md:border-r border-gray-800 p-3 sm:p-5 z-40">
 
             <h2 className="text-lg sm:text-xl font-bold mb-4 md:mb-8">
                 Jobify <span className="text-purple-400">Recruiter</span>
@@ -28,9 +28,10 @@ const RecruiterSidebar = () => {
                         to={item.path}
                         end={true}
                         className={({ isActive }) =>
-                            `block px-3 sm:px-4 py-2.5 md:py-3 rounded-lg text-xs sm:text-sm font-medium transition whitespace-nowrap ${isActive
-                                ? 'bg-purple-600 text-white'
-                                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                            `block px-3 sm:px-4 py-2.5 md:py-3 rounded-lg text-xs sm:text-sm font-medium transition whitespace-nowrap ${
+                                isActive
+                                    ? 'bg-purple-600 text-white'
+                                    : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                             }`
                         }
                     >

@@ -140,7 +140,7 @@ npm install
 ### 6. Start the backend server
 
 ```bash
-npm run dev
+node server.js
 ```
 
 The backend runs at:
