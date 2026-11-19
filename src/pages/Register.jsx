@@ -1,15 +1,19 @@
+import { API_URL } from '../config';
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Register = ({ setUsername }) => {
   const navigate = useNavigate();
+
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
+  const [role, setRole] = useState('job_seeker');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const validatePassword = (password) => {
     const regex =
@@ -23,11 +27,10 @@ const Register = ({ setUsername }) => {
   };
 
   const validateMobile = (mobile) => {
-    const regex = /^[0-9]{10}$/;
-    return regex.test(mobile);
+    return /^[0-9]{10}$/.test(mobile);
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     const trimmedFullName = fullName.trim();
@@ -61,15 +64,47 @@ const Register = ({ setUsername }) => {
       return;
     }
 
-    localStorage.setItem('user', JSON.stringify({ fullName: trimmedFullName }));
+    try {
+      setLoading(true);
+      setError('');
 
-    setError('');
-    setSuccess('Account created successfully!');
-    setUsername(trimmedFullName);
+      const response = await fetch(`${API_URL}/api/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          fullName: trimmedFullName,
+          email: trimmedEmail,
+          mobile: trimmedMobile,
+          password,
+          role
+        })
+      });
 
-    setTimeout(() => {
-      navigate('/');
-    }, 1000);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed.');
+      }
+
+      // Store name for existing Navbar display only.
+      // This does not authenticate the user.
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      setUsername(data.user.full_name);
+      setSuccess('Account created successfully!');
+
+      setTimeout(() => {
+        navigate(data.user.role === 'recruiter' ? '/recruiter/dashboard' : '/');
+      }, 1000);
+
+    } catch (err) {
+      setError(err.message || 'Unable to connect to the server.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -80,9 +115,16 @@ const Register = ({ setUsername }) => {
       }}
     >
       <div className="w-full max-w-md md:max-w-lg bg-gray-800 bg-opacity-90 p-8 rounded-lg shadow-xl space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center">Register</h2>
-
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold">
+            Create Job Seeker Account
+          </h2>
+          <p className="text-gray-300 text-sm mt-2">
+            Start your journey towards your next opportunity.
+          </p>
+        </div>
         {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+
         {success && <p className="text-green-400 text-sm text-center">{success}</p>}
 
         <form className="space-y-5" onSubmit={handleRegister}>
@@ -143,10 +185,10 @@ const Register = ({ setUsername }) => {
 
           <button
             type="submit"
-            disabled={!!success}
+            disabled={loading || !!success}
             className="w-full py-2 font-semibold text-white bg-purple-600 rounded hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Register
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
 

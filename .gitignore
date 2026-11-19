@@ -22,3 +22,25 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Backend dependencies
+backend/node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Uploaded resumes and company logos
+backend/uploads/
+uploads/
+
+# Backend logs
+backend/*.log
+
+# Local project inspection
+project-structure.txt
+

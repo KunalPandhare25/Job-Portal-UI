@@ -1,0 +1,19 @@
+$kind: http-request
+name: http://localhost:5000/api/login
+description: ""
+url: http://localhost:5000/api/login
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"email\": \"demo.recruiter@example.com\",\r
+
+    \  \"password\": \"Demo@12345\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0gtu}}"
+order: 1000
